@@ -28,6 +28,13 @@ public class RaceTeam {
     @Column(name = "Description", columnDefinition = "VARCHAR(255) CHARACTER SET utf8")
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "SeasonId", referencedColumnName = "SeasonId")
+    private Season season;
+
+    @Column(name = "Points")
+    private Long points;
+
     @Column(name = "CreatedAt")
     private Date createdAt;
 

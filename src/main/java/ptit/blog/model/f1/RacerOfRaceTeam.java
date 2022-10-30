@@ -22,11 +22,11 @@ public class RacerOfRaceTeam {
     private Long racerOfRaceTeamId;
 
     @ManyToOne
-    @JoinColumn(name = "RacerId")
+    @JoinColumn(name = "RacerId", referencedColumnName = "RacerId")
     Racer racer;
 
     @ManyToOne
-    @JoinColumn(name = "RaceTeamId")
+    @JoinColumn(name = "RaceTeamId", referencedColumnName = "RaceTeamId")
     RaceTeam raceTeam;
 
     @OneToMany(mappedBy = "racerOfRaceTeam", cascade = CascadeType.ALL)

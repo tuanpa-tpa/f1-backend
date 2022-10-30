@@ -18,13 +18,12 @@ public class Result {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long resultId;
-
     @Column
     private Integer point;
     @Column
     private Integer ranking;
     @Column
-    private LocalDateTime finishTime;
+    private String finishTime;
     @ManyToOne( cascade = CascadeType.ALL)
     @JoinColumn(name = "RacerOfRaceTeamId", referencedColumnName = "RacerOfRaceTeamId")
     private RacerOfRaceTeam racerOfRaceTeam;

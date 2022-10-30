@@ -28,6 +28,9 @@ public class Season {
     @OneToMany(mappedBy = "season", cascade = CascadeType.ALL)
     List<GrandPrix> grandPrixes;
 
+    @OneToMany(mappedBy = "season", cascade = CascadeType.ALL)
+    List<RaceTeam> raceTeams;
+
     @Column(name = "CreatedAt")
     private Date createdAt;
 
