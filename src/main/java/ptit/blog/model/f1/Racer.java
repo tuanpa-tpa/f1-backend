@@ -30,7 +30,7 @@ public class Racer {
 
     @Column(name = "Height")
     private Float height;
-    @Column(name = "Ưeight")
+    @Column(name = "Weight")
     private Float weight;
 
     @Column(name = "National", columnDefinition = "VARCHAR(255) CHARACTER SET utf8")

@@ -24,8 +24,6 @@ public class RaceTeam {
 
     @Column(name = "Name", columnDefinition = "VARCHAR(50) CHARACTER SET utf8")
     private String name;
-    @Column(name = "PowerUnit")
-    private LocalDateTime powerUnit;
 
     @Column(name = "Description", columnDefinition = "VARCHAR(255) CHARACTER SET utf8")
     private String description;
