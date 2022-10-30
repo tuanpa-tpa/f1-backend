@@ -35,4 +35,10 @@ public class Racer {
 
     @Column(name = "National", columnDefinition = "VARCHAR(255) CHARACTER SET utf8")
     private String national;
+
+    @Column(name = "CreatedAt")
+    private Date createdAt;
+
+    @Column(name = "UpdatedAt")
+    private Date updatedAt;
 }

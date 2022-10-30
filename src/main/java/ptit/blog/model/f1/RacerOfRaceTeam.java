@@ -5,6 +5,7 @@ import lombok.*;
 import ptit.blog.model.BaseEntity;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -30,4 +31,10 @@ public class RacerOfRaceTeam {
 
     @OneToMany(mappedBy = "racerOfRaceTeam", cascade = CascadeType.ALL)
     List<Result> results;
+
+    @Column(name = "CreatedAt")
+    private Date createdAt;
+
+    @Column(name = "UpdatedAt")
+    private Date updatedAt;
 }

@@ -6,6 +6,7 @@ import ptit.blog.model.BaseEntity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -28,4 +29,10 @@ public class RaceTeam {
 
     @Column(name = "Description", columnDefinition = "VARCHAR(255) CHARACTER SET utf8")
     private String description;
+
+    @Column(name = "CreatedAt")
+    private Date createdAt;
+
+    @Column(name = "UpdatedAt")
+    private Date updatedAt;
 }

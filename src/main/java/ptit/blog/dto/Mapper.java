@@ -3,8 +3,10 @@ package ptit.blog.dto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ptit.blog.dto.entity.GrandPrixDto;
 import ptit.blog.dto.entity.UserDto;
 import ptit.blog.dto.response.user.CreateUserResp;
+import ptit.blog.model.f1.GrandPrix;
 import ptit.blog.model.user.User;
 import ptit.blog.repository.UserRepo;
 
@@ -36,6 +38,15 @@ public class Mapper {
                 .isActive(user.getIsActive())
                 .createdAt(user.getCreatedAt())
                 .updatedAt(user.getUpdatedAt())
+                .build();
+    }
+
+    public static GrandPrixDto responseGrandPrixDtoFromModel(GrandPrix grandPrix) {
+        return GrandPrixDto.builder()
+                .grandPrixId(grandPrix.getGrandPrixId())
+                .name(grandPrix.getName())
+                .time(grandPrix.getTime())
+                .laps(grandPrix.getLaps())
                 .build();
     }
 }

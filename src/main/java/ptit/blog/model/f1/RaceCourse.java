@@ -4,6 +4,7 @@ import lombok.*;
 import ptit.blog.model.BaseEntity;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -24,4 +25,10 @@ public class RaceCourse {
 
     @OneToMany(mappedBy = "raceCourse")
     Set<GrandPrix> grandPrixes;
+
+    @Column(name = "CreatedAt")
+    private Date createdAt;
+
+    @Column(name = "UpdatedAt")
+    private Date updatedAt;
 }

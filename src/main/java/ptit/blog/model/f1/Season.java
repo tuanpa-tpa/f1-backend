@@ -5,6 +5,7 @@ import lombok.*;
 import ptit.blog.model.BaseEntity;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -26,4 +27,10 @@ public class Season {
 
     @OneToMany(mappedBy = "season", cascade = CascadeType.ALL)
     List<GrandPrix> grandPrixes;
+
+    @Column(name = "CreatedAt")
+    private Date createdAt;
+
+    @Column(name = "UpdatedAt")
+    private Date updatedAt;
 }

@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import ptit.blog.model.f1.RaceCourse;
 
 @Repository
-public interface RacerCourseRepo extends JpaRepository<RaceCourse, Long> {
+public interface RaceCourseRepo extends JpaRepository<RaceCourse, Long> {
 }

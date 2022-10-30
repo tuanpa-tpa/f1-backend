@@ -5,6 +5,7 @@ import ptit.blog.model.BaseEntity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "tbl_result")
@@ -30,4 +31,10 @@ public class Result {
     @ManyToOne( cascade = CascadeType.ALL)
     @JoinColumn( name = "GrandPrixId", referencedColumnName = "GrandPrixId")
     private GrandPrix grandPrix;
+
+    @Column(name = "CreatedAt")
+    private Date createdAt;
+
+    @Column(name = "UpdatedAt")
+    private Date updatedAt;
 }

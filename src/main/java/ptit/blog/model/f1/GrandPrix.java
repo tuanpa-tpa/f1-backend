@@ -5,6 +5,7 @@ import ptit.blog.model.BaseEntity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -25,7 +26,7 @@ public class GrandPrix {
     @Column(name = "Laps", columnDefinition = "VARCHAR(50) CHARACTER SET utf8")
     private int laps;
     @Column(name = "Time")
-    private LocalDateTime time;
+    private String time;
 
     @OneToMany(mappedBy = "grandPrix")
     Set<Result> results;
@@ -35,4 +36,10 @@ public class GrandPrix {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "SeasonId", referencedColumnName = "SeasonId")
     private Season season;
+
+    @Column(name = "CreatedAt")
+    private Date createdAt;
+
+    @Column(name = "UpdatedAt")
+    private Date updatedAt;
 }
