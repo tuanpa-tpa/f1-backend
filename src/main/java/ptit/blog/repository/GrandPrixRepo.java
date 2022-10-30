@@ -12,10 +12,12 @@ import java.util.Date;
 
 @Repository
 public interface GrandPrixRepo extends JpaRepository<GrandPrix, Long> {
-    @Query("SELECT g FROM GrandPrix g WHERE (:contains is null or (g.name LIKE %:contains%))"+
+    @Query("SELECT g FROM GrandPrix g WHERE (:contains is null or (g.name LIKE %:contains%))" +
+            " AND (:seasonId is null or :seasonId = g.season.seasonId)"+
             " AND (:fromDate is null or :fromDate <= g.updatedAt)"+
             " AND (:toDate is null or :toDate >= g.updatedAt)")
     Page<GrandPrix> search(@Param("contains") String contains,
+                           @Param("seasonId") Long seasonId,
                            @Param("fromDate") Date fromDate,
                            @Param("toDate") Date toDate,
                            Pageable pageable);

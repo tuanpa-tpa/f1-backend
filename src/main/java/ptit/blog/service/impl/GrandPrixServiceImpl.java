@@ -43,6 +43,7 @@ public class GrandPrixServiceImpl implements GrandPrixService {
         int page = (req.getPage() == null) ? 0 : req.getPage();
         int size = (req.getSize() == null) ? 20 : req.getSize();
         String contains = ((req.getContains() == null) || (req.getContains().equals(""))) ? null : req.getContains().trim();
+        Long seasonId = (req.getSeasonId() == null) ? null : req.getSeasonId();
         if (contains != null) {
             String[] words = contains.split("\\s+");
             contains = String.join(" ", words);
@@ -60,7 +61,7 @@ public class GrandPrixServiceImpl implements GrandPrixService {
             if (req.getToDate() != null && !req.getToDate().equals(""))
                 toDate = sf.parse(req.getToDate() + " 23:59:59");
             //Get list TokenModel from search method in repo
-            Page<GrandPrix> pageHsm = grandPrixRepo.search(contains, fromDate, toDate, pageable);
+            Page<GrandPrix> pageHsm = grandPrixRepo.search(contains,seasonId, fromDate, toDate, pageable);
 
             res.setData(ResponsePagination.builder()
                     .data(pageHsm.stream().map(Mapper::responseGrandPrixDtoFromModel).collect(Collectors.toList()))

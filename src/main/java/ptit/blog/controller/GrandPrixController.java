@@ -14,7 +14,7 @@ import ptit.blog.response.ResponseObject;
 import ptit.blog.response.ResponsePagination;
 import ptit.blog.service.GrandPrixService;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @Slf4j
 @RequestMapping(value ="/grandPrix")

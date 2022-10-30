@@ -4,9 +4,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ptit.blog.dto.entity.GrandPrixDto;
+import ptit.blog.dto.entity.SeasonDto;
 import ptit.blog.dto.entity.UserDto;
 import ptit.blog.dto.response.user.CreateUserResp;
 import ptit.blog.model.f1.GrandPrix;
+import ptit.blog.model.f1.Season;
 import ptit.blog.model.user.User;
 import ptit.blog.repository.UserRepo;
 
@@ -16,7 +18,7 @@ import ptit.blog.repository.UserRepo;
 public class Mapper {
     private final UserRepo userRepo;
 
-    public static CreateUserResp responseUserFromModel(User user){
+    public static CreateUserResp responseUserFromModel(User user) {
         if (user == null) {
             return null;
         }
@@ -47,6 +49,15 @@ public class Mapper {
                 .name(grandPrix.getName())
                 .time(grandPrix.getTime())
                 .laps(grandPrix.getLaps())
+                .build();
+    }
+
+    public static SeasonDto responseSeasonDtoFromModel(Season season) {
+        return SeasonDto.builder()
+                .seasonId(season.getSeasonId())
+                .name(season.getName())
+                .updatedAt(season.getUpdatedAt())
+                .createdAt(season.getCreatedAt())
                 .build();
     }
 }

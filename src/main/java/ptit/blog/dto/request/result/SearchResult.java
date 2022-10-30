@@ -1,4 +1,4 @@
-package ptit.blog.dto.request.grandfrix;
+package ptit.blog.dto.request.result;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,15 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Data
+@NoArgsConstructor
 @Builder
-public class SearchGrandPrix {
+public class SearchResult {
     private Integer page;
     private Integer size;
     private String[] sort;
     private String contains;
     private String fromDate;
     private String toDate;
-    private Long SeasonId;
 }
