@@ -17,13 +17,20 @@ import java.util.Date;
 public class Result {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ResultId")
     private Long resultId;
-    @Column
+
+    @Column(name = "Point")
     private Integer point;
-    @Column
+
+    @Column (name = "Ranking")
     private Integer ranking;
-    @Column
+
+    @Column(name = "FinishTime")
     private String finishTime;
+
+    @Column(name="LapFinished")
+    private Integer lapFinished;
     @ManyToOne( cascade = CascadeType.ALL)
     @JoinColumn(name = "RacerOfRaceTeamId", referencedColumnName = "RacerOfRaceTeamId")
     private RacerOfRaceTeam racerOfRaceTeam;

@@ -5,16 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @AllArgsConstructor
-@Data
 @NoArgsConstructor
 @Builder
-public class SearchResult {
-    private Integer page;
-    private Integer size;
-    private String[] sort;
+@Data
+public class CreateResultReq {
+    private Long racerOfRaceTeamId;
     private Long grandPrixId;
-    private String contains;
-    private String fromDate;
-    private String toDate;
+    private Date createdAt;
+    private Date updatedAt;
 }
