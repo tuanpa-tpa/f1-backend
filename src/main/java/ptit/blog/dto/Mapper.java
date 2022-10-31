@@ -3,20 +3,19 @@ package ptit.blog.dto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ptit.blog.dto.entity.GrandPrixDto;
-import ptit.blog.dto.entity.ResultDto;
-import ptit.blog.dto.entity.SeasonDto;
-import ptit.blog.dto.entity.UserDto;
+import ptit.blog.dto.entity.*;
+import ptit.blog.dto.response.RaceTeamInfo;
 import ptit.blog.dto.response.user.CreateUserResp;
-import ptit.blog.model.f1.GrandPrix;
-import ptit.blog.model.f1.Racer;
-import ptit.blog.model.f1.Result;
-import ptit.blog.model.f1.Season;
+import ptit.blog.model.f1.*;
 import ptit.blog.model.user.User;
 import ptit.blog.repository.RaceTeamRepo;
 import ptit.blog.repository.RacerOfRaceTeamRepo;
 import ptit.blog.repository.RacerRepo;
 import ptit.blog.repository.UserRepo;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -79,6 +78,47 @@ public class Mapper {
                 .raceTeam(result.getRacerOfRaceTeam().getRaceTeam().getName())
                 .createdAt(result.getCreatedAt())
                 .updatedAt(result.getUpdatedAt())
+                .build();
+    }
+
+    public static RaceTeamDto responseRaceTeamDtoFromModel(RaceTeam raceTeam) {
+        return RaceTeamDto.builder()
+                .raceTeamId(raceTeam.getRaceTeamId())
+                .name(raceTeam.getName())
+                .description(raceTeam.getDescription())
+                .points(raceTeam.getPoints())
+                .createdAt(raceTeam.getCreatedAt())
+                .updatedAt(raceTeam.getUpdatedAt())
+                .build();
+    }
+
+    public static RacerDto responseRaceDtoFromModel(Racer racer) {
+        return RacerDto.builder()
+                .racerId(racer.getRacerId())
+                .name(racer.getName())
+                .bio(racer.getBio())
+                .dateOfBirth(racer.getDateOfBirth())
+                .height(racer.getHeight())
+                .weight(racer.getWeight())
+                .national(racer.getNational())
+                .createdAt(racer.getCreatedAt())
+                .updatedAt(racer.getUpdatedAt())
+                .build();
+    }
+
+    public static RaceTeamInfo responseRaceTeamInfoFromModel(RaceTeam raceTeam, List<RacerOfRaceTeam> racerOfRaceTeam) {
+        List<Racer> racers = new ArrayList<>();
+        racerOfRaceTeam.forEach(racer -> {
+            racers.add(racer.getRacer());
+        });
+        List<RacerDto> racerDtos = racers.stream().map(Mapper::responseRaceDtoFromModel).collect(Collectors.toList());
+        return RaceTeamInfo.builder()
+                .name(raceTeam.getName())
+                .description(raceTeam.getDescription())
+                .points(raceTeam.getPoints())
+                .racers(racerDtos)
+                .createdAt(raceTeam.getCreatedAt())
+                .updatedAt(raceTeam.getUpdatedAt())
                 .build();
     }
 }
