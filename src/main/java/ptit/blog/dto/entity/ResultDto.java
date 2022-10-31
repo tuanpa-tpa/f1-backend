@@ -18,7 +18,7 @@ import java.util.Date;
 @Builder
 public class ResultDto implements Serializable {
     private Long resultId;
-    private String finishTime;
+    private String timeFinished;
     private Integer lapFinished;
     private String racerName;
     private String raceTeam;

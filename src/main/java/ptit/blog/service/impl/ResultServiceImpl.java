@@ -7,13 +7,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ptit.blog.dto.Mapper;
 import ptit.blog.dto.entity.ResultDto;
-import ptit.blog.dto.request.grandfrix.UpdateGrandPrixReq;
 import ptit.blog.dto.request.result.CreateResultReq;
 import ptit.blog.dto.request.result.SearchResult;
+import ptit.blog.dto.request.result.UpdateResult;
+import ptit.blog.dto.request.result.UpdateResultReq;
 import ptit.blog.model.f1.GrandPrix;
+import ptit.blog.model.f1.RaceTeam;
 import ptit.blog.model.f1.RacerOfRaceTeam;
 import ptit.blog.model.f1.Result;
 import ptit.blog.repository.GrandPrixRepo;
+import ptit.blog.repository.RaceTeamRepo;
 import ptit.blog.repository.RacerOfRaceTeamRepo;
 import ptit.blog.repository.ResultRepo;
 import ptit.blog.response.ResponseObject;
@@ -24,7 +27,8 @@ import ptit.blog.utilservice.PaginationCustom;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,6 +39,7 @@ public class ResultServiceImpl implements ResultService {
     private final GrandPrixRepo grandPrixRepo;
     private final RacerOfRaceTeamRepo racerOfRaceTeamRepo;
     private final PaginationCustom paginationCustom;
+    private final RaceTeamRepo raceTeamRepo;
 
     @Override
     public ResponseObject<ResponsePagination<Object>> search(SearchResult req) {
@@ -75,20 +80,10 @@ public class ResultServiceImpl implements ResultService {
         }
         return res;
     }
-
-    /**
-     * @param id
-     * @return
-     */
     @Override
     public ResponseObject<Boolean> delete(Long id) {
         return null;
     }
-
-    /**
-     * @param id
-     * @return
-     */
     @Override
     public ResponseObject<ResultDto> find(Long id) {
         return null;
@@ -99,14 +94,44 @@ public class ResultServiceImpl implements ResultService {
      * @return
      */
     @Override
-    public ResponseObject<ResultDto> update(UpdateGrandPrixReq req) {
-        return null;
+    public ResponseObject<Boolean> update(UpdateResultReq req) {
+        ResponseObject<Boolean> res = new ResponseObject<>(true, ResponseStatus.DO_SERVICE_SUCCESSFUL);
+        try {
+            List<Result> results = new ArrayList<>();
+            req.getUpdates().forEach((UpdateResult u) -> {
+                Result result = this.resultRepo.findById(u.getResultId())
+                        .orElseThrow(() -> new RuntimeException("Could not find result"));
+                result.setLapFinished(u.getLapFinished());
+                result.setTimeFinished(u.getTimeFinished());
+                Result newResult = this.resultRepo.save(result);
+                results.add(newResult);
+            });
+            results.sort(Comparator.comparing(Result::getTimeFinished));
+            GrandPrix grandPrix = this.grandPrixRepo.findById(req.getGrandPrixId())
+                    .orElseThrow(() -> new RuntimeException("Could not found getGrandPrixId"));
+            int sumLap = grandPrix.getLaps();
+            AtomicInteger i = new AtomicInteger(1);
+            results.forEach((Result result) -> {
+                if (result.getLapFinished() == sumLap) {
+                    result.setRanking(i.getAndIncrement());
+                    result.setPoint(pointCalculate(result));
+                } else {
+                    result.setRanking(0);
+                    result.setPoint(pointCalculate(result));
+                }
+                this.resultRepo.save(result);
+                RaceTeam raceTeam = result.getRacerOfRaceTeam().getRaceTeam();
+                int teamPoints = raceTeam.getPoints() == null ? 0 : raceTeam.getPoints()  + result.getPoint();
+                raceTeam.setPoints(teamPoints);
+                this.raceTeamRepo.save(raceTeam);
+            });
+            res.setData(true);
+        } catch (Exception e) {
+            res.setData(false);
+            log.error(e.getMessage());
+        }
+        return res;
     }
-
-    /**
-     * @param req
-     * @return
-     */
     @Override
     public ResponseObject<ResultDto> create(CreateResultReq req) {
         ResponseObject<ResultDto> res = new ResponseObject<>(true, ResponseStatus.DO_SERVICE_SUCCESSFUL);
@@ -127,5 +152,10 @@ public class ResultServiceImpl implements ResultService {
         }
         res.setData(Mapper.responseResultDtoFromModel(result));
         return res;
+    }
+
+    public static int pointCalculate(Result result) {
+        int point = 21;
+        return result.getRanking() == null  ? 0 : point - result.getRanking();
     }
 }

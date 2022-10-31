@@ -73,8 +73,8 @@ public class Mapper {
     public static ResultDto responseResultDtoFromModel(Result result) {
         return ResultDto.builder()
                 .resultId(result.getResultId())
-                .finishTime(result.getFinishTime())
-                .lapFinished(result.getLapFinished())
+                .timeFinished(result.getTimeFinished() == null ? "0" : result.getTimeFinished())
+                .lapFinished(result.getLapFinished() == null ? 0 : result.getLapFinished())
                 .racerName(result.getRacerOfRaceTeam().getRacer().getName())
                 .raceTeam(result.getRacerOfRaceTeam().getRaceTeam().getName())
                 .createdAt(result.getCreatedAt())

@@ -33,7 +33,7 @@ public class RaceTeam {
     private Season season;
 
     @Column(name = "Points")
-    private Long points;
+    private Integer points;
 
     @Column(name = "CreatedAt")
     private Date createdAt;

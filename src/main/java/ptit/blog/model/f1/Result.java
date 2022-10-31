@@ -26,8 +26,8 @@ public class Result {
     @Column (name = "Ranking")
     private Integer ranking;
 
-    @Column(name = "FinishTime")
-    private String finishTime;
+    @Column(name = "TimeFinished")
+    private String timeFinished;
 
     @Column(name="LapFinished")
     private Integer lapFinished;

@@ -5,13 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Builder
-public class UpdateResultReq {
-    private Long grandPrixId;
-    List<UpdateResult> updates;
+public class UpdateResult {
+    private Long resultId;
+    private String timeFinished;
+    private int lapFinished;
 }
