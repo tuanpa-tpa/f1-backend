@@ -7,12 +7,15 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ptit.blog.dto.entity.GrandPrixDto;
+import ptit.blog.dto.entity.SeasonDto;
 import ptit.blog.dto.request.grandfrix.CreateGrandPrixReq;
 import ptit.blog.dto.request.grandfrix.SearchGrandPrix;
 import ptit.blog.dto.request.grandfrix.UpdateGrandPrixReq;
 import ptit.blog.response.ResponseObject;
 import ptit.blog.response.ResponsePagination;
 import ptit.blog.service.GrandPrixService;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -56,6 +59,13 @@ public class GrandPrixController {
     public ResponseEntity<?> updateGrandPrix(@RequestBody UpdateGrandPrixReq req) {
         log.info("Controller: update");
         ResponseObject<GrandPrixDto> res = this.grandPrixService.update(req);
+        return ResponseEntity.ok(res);
+    }
+
+    @GetMapping("/get-all")
+    public ResponseEntity<?> getAll() {
+        log.info("Controller: get-all");
+        ResponseObject<List<GrandPrixDto>> res = this.grandPrixService.getAll();
         return ResponseEntity.ok(res);
     }
 

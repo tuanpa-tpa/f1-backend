@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ptit.blog.dto.Mapper;
 import ptit.blog.dto.entity.GrandPrixDto;
+import ptit.blog.dto.entity.SeasonDto;
 import ptit.blog.dto.request.grandfrix.CreateGrandPrixReq;
 import ptit.blog.dto.request.grandfrix.SearchGrandPrix;
 import ptit.blog.dto.request.grandfrix.UpdateGrandPrixReq;
@@ -25,6 +26,7 @@ import ptit.blog.utilservice.PaginationCustom;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 
@@ -145,6 +147,14 @@ public class GrandPrixServiceImpl implements GrandPrixService {
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
+        return res;
+    }
+
+    @Override
+    public ResponseObject<List<GrandPrixDto>> getAll() {
+        ResponseObject<List<GrandPrixDto>> res = new ResponseObject<>(true, ResponseStatus.DO_SERVICE_SUCCESSFUL);
+        List<GrandPrix> grandPrixes = grandPrixRepo.findAll();
+        res.setData(grandPrixes.stream().map(Mapper::responseGrandPrixDtoFromModel).collect(Collectors.toList()));
         return res;
     }
 }
