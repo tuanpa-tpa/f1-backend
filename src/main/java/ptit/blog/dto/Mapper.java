@@ -57,6 +57,8 @@ public class Mapper {
                 .name(grandPrix.getName())
                 .time(grandPrix.getTime())
                 .laps(grandPrix.getLaps())
+                .raceCourseId(grandPrix.getRaceCourse().getRaceCourseId())
+                .seasonId(grandPrix.getSeason().getSeasonId())
                 .build();
     }
 

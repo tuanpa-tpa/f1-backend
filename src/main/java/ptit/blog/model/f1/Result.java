@@ -31,10 +31,10 @@ public class Result {
 
     @Column(name="LapFinished")
     private Integer lapFinished;
-    @ManyToOne( cascade = CascadeType.ALL)
+    @ManyToOne( cascade = CascadeType.REMOVE)
     @JoinColumn(name = "RacerOfRaceTeamId", referencedColumnName = "RacerOfRaceTeamId")
     private RacerOfRaceTeam racerOfRaceTeam;
-    @ManyToOne( cascade = CascadeType.ALL)
+    @ManyToOne( cascade = CascadeType.REMOVE)
     @JoinColumn( name = "GrandPrixId", referencedColumnName = "GrandPrixId")
     private GrandPrix grandPrix;
 

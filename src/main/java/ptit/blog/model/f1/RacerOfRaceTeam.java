@@ -29,7 +29,7 @@ public class RacerOfRaceTeam {
     @JoinColumn(name = "RaceTeamId", referencedColumnName = "RaceTeamId")
     RaceTeam raceTeam;
 
-    @OneToMany(mappedBy = "racerOfRaceTeam", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "racerOfRaceTeam", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Result> results;
 
     @Column(name = "CreatedAt")

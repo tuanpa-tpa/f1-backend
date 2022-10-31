@@ -82,7 +82,10 @@ public class GrandPrixServiceImpl implements GrandPrixService {
     public ResponseObject<Boolean> delete(Long id) {
         ResponseObject<Boolean> res = new ResponseObject<>(true, ResponseStatus.DO_SERVICE_SUCCESSFUL);
         try {
-            grandPrixRepo.deleteById(id);
+            GrandPrix grandPrix = this.grandPrixRepo.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Could not find by id"));
+            grandPrix.setResults(null);
+            grandPrixRepo.delete(grandPrix);
             res.setData(true);
         } catch (Exception e) {
             res.setData(false);

@@ -17,4 +17,6 @@ public class GrandPrixDto implements Serializable {
     private String name;
     private int laps;
     private String time;
+    private Long seasonId;
+    private Long raceCourseId;
 }

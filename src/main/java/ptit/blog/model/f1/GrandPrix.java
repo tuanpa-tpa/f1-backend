@@ -28,12 +28,12 @@ public class GrandPrix {
     @Column(name = "Time")
     private String time;
 
-    @OneToMany(mappedBy = "grandPrix")
+    @OneToMany(mappedBy = "grandPrix", orphanRemoval = true, cascade = CascadeType.ALL)
     Set<Result> results;
     @ManyToOne
     @JoinColumn(name = "RaceCourseId", referencedColumnName = "RaceCourseId")
     private RaceCourse raceCourse;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "SeasonId", referencedColumnName = "SeasonId")
     private Season season;
 
